@@ -162,7 +162,7 @@ CFLAGS-openchild.c = -fexceptions
 
 sunrpc-CPPFLAGS = -D_RPC_THREAD_SAFE_
 CPPFLAGS += $(sunrpc-CPPFLAGS)
-BUILD_CPPFLAGS += $(sunrpc-CPPFLAGS)
+BUILD_CPPFLAGS += $(sunrpc-CPPFLAGS) -I/usr/local/include
 
 $(objpfx)tst-getmyaddr: $(common-objpfx)linkobj/libc.so
 $(objpfx)tst-xdrmem: $(common-objpfx)linkobj/libc.so
@@ -180,7 +180,7 @@ $(cross-rpcgen-objs): $(objpfx)cross-%.o: %.c $(before-compile)
 		$(OUTPUT_OPTION) $(native-compile-mkdep-flags) -c
 
 $(objpfx)cross-rpcgen: $(cross-rpcgen-objs)
-	$(BUILD_CC) $^ $(BUILD_LDFLAGS) -o $@
+	$(BUILD_CC) $^ $(BUILD_LDFLAGS) -L/usr/local/lib -lintl -o $@
 
 # This makes sure -DNOT_IN_libc is passed for all these modules.
 cpp-srcs-left := $(rpcgen-objs:.o=.c)
